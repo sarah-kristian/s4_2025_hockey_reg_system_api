@@ -1,6 +1,5 @@
 package com.keyin.rest.game;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,11 +7,15 @@ import java.util.Optional;
 
 @Service
 public class GameService {
-    @Autowired
-    private GameRepository gameRepository;
+
+    private final GameRepository gameRepository;
+
+    public GameService(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
+    }
 
     public List<Game> getAllGames() {
-        return (List<Game>) gameRepository.findAll();
+        return gameRepository.findAll();
     }
 
     public Game getGameById(long id) {
@@ -29,9 +32,11 @@ public class GameService {
         return gameRepository.findByLocation(location);
     }
 
-
-    public void deleteGameById(long id) {
-        gameRepository.deleteById(id);
+    public List<Game> getGamesByTeamAndLocation(String name, String location) {
+        List<Game> byTeam = gameRepository.findByHomeTeam_NameOrAwayTeam_Name(name, name);
+        return byTeam.stream()
+                .filter(game -> location.equals(game.getLocation()))
+                .toList();
     }
 
     public Game createGame(Game newGame) {
@@ -49,11 +54,16 @@ public class GameService {
             gameToUpdate.setLocation(updatedGame.getLocation());
             gameToUpdate.setScheduledDate(updatedGame.getScheduledDate());
             gameToUpdate.setHomeScore(updatedGame.getHomeScore());
-            gameToUpdate.setCompleted(updatedGame.isCompleted());
+            gameToUpdate.setAwayScore(updatedGame.getAwayScore());
 
             return gameRepository.save(gameToUpdate);
         }
 
         return null;
     }
+
+    public void deleteGameById(long id) {
+        gameRepository.deleteById(id);
+    }
+
 }
