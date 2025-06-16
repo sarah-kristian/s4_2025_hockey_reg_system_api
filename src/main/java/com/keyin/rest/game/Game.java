@@ -6,7 +6,6 @@ import java.util.Calendar;
 
 /**
  * Represents a scheduled or completed hockey game between two teams.
- * A game is considered completed if both home and away scores are set.
  * The match display format includes team names and scores.
  */
 
