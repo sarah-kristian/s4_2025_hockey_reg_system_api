@@ -50,8 +50,17 @@ The system should be seeded with teams, players, and divisions first — as game
 
 ## Development and Testing
 
-- This branch supports API testing with **Postman** or other tools.
+- This branch supports API testing with **Postman** or other tools (see images below).
 - Sample data can be posted to `/game` as JSON.
+
+<p align="center">
+  <img src="images/saveGame.png" alt="POST test with Postman" width="80%">
+</p>
+
+<p align="center">
+  <img src="images/findAll.png" alt="GET test with Postman" width="80%">
+</p>
+
 
 ---
 
